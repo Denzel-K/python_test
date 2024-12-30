@@ -5,14 +5,16 @@ pipeline {
             }
       }
     triggers {
-      pollSCM 'H/5 * * * *'
+      pollSCM '* * * * *'
     }
     stages {
         stage('Build') {
             steps {
                 echo "Building.."
                 sh '''
-                echo "doing build stuff.."
+                echo "Starting build..."
+                cd myapp
+                pip install -r requirements.txt
                 '''
             }
         }
@@ -20,7 +22,10 @@ pipeline {
             steps {
                 echo "Testing.."
                 sh '''
-                echo "doing test stuff.."
+                echo "Testing..."
+                cd myapp
+                python3 fire.py
+                python3 fire.py --name=jarhead
                 '''
             }
         }
